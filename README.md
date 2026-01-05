@@ -22,14 +22,17 @@ Action: S = Σ_x [½(∂φ)² + ½μ²φ² + ¼λφ⁴]
 
 ## Key Results
 
-Comparison of scaling dimensions (exponents) $\Delta$ obtained from deriving the transfer matrix spectrum.
+Scaling dimensions $x$ extracted from the transfer matrix spectrum:
 
-| Operator | Ising (Exact) | φ⁴ (This Work) |
-|----------|---------------|----------------|
-| Magnetization ($\sigma$) | 0.125 | 0.152 |
-| Energy ($\epsilon$) | 1.000 | 0.998 |
+| Operator | Exact (CFT) | Ising (EKR, χ=30) | φ⁴ (This Work, χ=32) |
+|----------|-------------|-------------------|----------------------|
+| Spin ($\sigma$) | 0.125 | 0.125 | 0.152 |
+| Energy ($\epsilon$) | 1.000 | 1.000 | 0.998 |
 
-Values for φ⁴ were computed at RG step 5 with $\chi=32$ (see `docs/phi4_results.pdf`).
+- **Ising results**: Reproduced from EKR using their Newton method at the critical point
+- **φ⁴ results**: Computed at RG step 5, critical point μ²_c ≈ 2.731815 (λ=1, κ=1)
+
+See `docs/phi4_results.pdf` for details.
 
 ## Directory Structure
 

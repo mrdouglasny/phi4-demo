@@ -91,10 +91,14 @@ function main()
             # Index 1 is Identity (x=0)
             # Index 2 is likely Sigma (x=0.125)
             # Index 3 is likely Epsilon (x=1.0) or subleading Sigma
-            if length(scaldims) >= 3
+            n = length(scaldims)
+            if n >= 3
                 @printf("Step %d: x_1=%.6f  x_2=%.6f\n", step, scaldims[2], scaldims[3])
-            else
+            elseif n >= 2
                 @printf("Step %d: x_1=%.6f\n", step, scaldims[2])
+            else
+                @printf("Step %d: (insufficient eigenvalues, tensor may have collapsed)\n", step)
+                break  # Stop if tensor has collapsed
             end
             
             # Save to file

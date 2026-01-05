@@ -53,13 +53,21 @@ def get_scaldims_phi4(A, pars=None):
     transmat = ncon((A_arr, A_arr), [[3,-3,4,-1], [4,-4,3,-2]])
     
     s = A_arr.shape
-    dim = s[0] * s[0] # Assuming square tensor
-    T_mat = transmat.reshape(dim, dim)
-    
-    try:
-        es = np.linalg.eigvals(T_mat)
-    except:
-        # Fallback for stability
+    # Transfer matrix has shape (d1*d2, u1*u2) from ncon output
+    # transmat shape is (s[1], s[1], s[3], s[3]) -> need to reshape to (s[3]*s[3], s[1]*s[1])
+    dim_row = transmat.shape[2] * transmat.shape[3]  # d1*d2
+    dim_col = transmat.shape[0] * transmat.shape[1]  # u1*u2
+    T_mat = transmat.transpose(2, 3, 0, 1).reshape(dim_row, dim_col)
+
+    # Use SVD for non-square or eigenvalues for square
+    if dim_row == dim_col:
+        try:
+            es = np.linalg.eigvals(T_mat)
+        except:
+            U, S, Vh = np.linalg.svd(T_mat)
+            es = S
+    else:
+        # Non-square: use singular values
         U, S, Vh = np.linalg.svd(T_mat)
         es = S
         
